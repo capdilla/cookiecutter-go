@@ -1,0 +1,7 @@
+FROM python:3.6.13-alpine
+
+WORKDIR /boilerplate
+
+RUN pip install cookiecutter
+
+RUN apk add --no-cache git

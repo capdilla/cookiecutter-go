@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  cookiecutter:
+    build:
+      context: .
+      dockerfile: Dockerfile.cookiecutter
+    tty: true
+    volumes:
+      - ./:/boilerplate

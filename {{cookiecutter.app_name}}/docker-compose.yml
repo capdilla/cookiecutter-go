@@ -1,0 +1,42 @@
+version: '3.5'
+services:
+  db:
+    image: postgres
+    volumes:
+      - {{cookiecutter.app_name}}-db:/var/lib/postgresql/duna-{{cookiecutter.app_name}}
+    ports:
+      - "5443:5432"
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_DB: duna-{{cookiecutter.app_name}}
+    networks:
+      - duna-net
+
+  api:
+    volumes:
+      - .:/app/
+    environment:
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: password
+      DATABASE: duna-{{cookiecutter.app_name}}
+      DATABASE_HOST: db
+      DB_PORT: {{cookiecutter.db_dev_port}}
+    env_file:
+      - .env
+    depends_on:
+      - db
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - "{{cookiecutter.app_dev_port}}:80"
+    networks:
+      - duna-net
+
+volumes:
+  {{cookiecutter.app_name}}-db:
+
+networks:
+  duna-net:
+    external: true
+    name: duna-net

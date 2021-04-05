@@ -1,0 +1,7 @@
+{
+  "app_name": "mygolangproject",
+  "project_short_description": "d-UNA Backend golang project",
+  "db_dev_port": 5443,
+  "app_dev_port": 8082,
+  "go_mod_or_dep": ["mod", "dep"]
+}
