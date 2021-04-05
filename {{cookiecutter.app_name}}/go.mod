@@ -1,4 +1,4 @@
-module github.com/DUNA-E-Commmerce/test2
+module github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}
 
 go 1.14
 

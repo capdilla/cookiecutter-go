@@ -8,4 +8,5 @@ services:
       dockerfile: Dockerfile.cookiecutter
     tty: true
     volumes:
-      - ./:/boilerplate
+      - ./:/boilerplate/template
+      - ${FOLDER_DEST}:/boilerplate/tmp

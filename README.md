@@ -8,5 +8,9 @@
 ## How to run
 
 ```
-  make start
+ make build FOLDER_DEST=/Users/carlospadilla/Desktop/duna/
 ```
+
+## TODO
+
+- [x] Test base template
