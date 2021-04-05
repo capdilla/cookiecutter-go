@@ -5,10 +5,9 @@ package main
 import (
 	"os"
 
-	handlers "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/http/handlers"
-	middlewares "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/http/middlewares"
-	repo "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/repository"
-	services "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/services"
+	"github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/controllers"
+	middlewares "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/middlewares"
+
 	storage "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/storage"
 	utils "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/utils"
 	"github.com/gin-contrib/requestid"
@@ -39,10 +38,7 @@ type RefreshTokenResponse struct {
 
 // AppConfiguration configuration
 type AppConfiguration struct {
-	Config        *utils.Config
-	MerchantRepo  repo.MerchantRepository
-	UserRepo      repo.UserRepository
-	CryptoService services.CryptoService
+	Config *utils.Config
 }
 
 func setupApp() *AppConfiguration {
@@ -55,14 +51,9 @@ func setupApp() *AppConfiguration {
 	// Connect to database
 	storage.Init(cfg)
 
-	// get db driver instance
-	db := storage.GetDB()
 	// initialize top level dependencies
 	return &AppConfiguration{
-		Config:        cfg,
-		MerchantRepo:  repo.NewMerchantRepository(db),
-		UserRepo:      repo.NewUserRepository(db),
-		CryptoService: services.NewCryptoService(cfg, repo.NewMerchantPrivateKeyRepository(db)),
+		Config: cfg,
 	}
 }
 
@@ -81,20 +72,26 @@ func NewRouter(cfg *AppConfiguration) *gin.Engine {
 	engine.Use(requestid.New(), middlewares.Logger(utils.Logger()), gin.Recovery())
 
 	// healthcheck
-	health := new(handlers.HealthController)
+	health := new(controllers.HealthController)
 	engine.GET("/health", health.Status)
 	engine.Use(cors.AllowAll())
 
-	merchant := handlers.NewMerchantController(cfg.Config, cfg.MerchantRepo, cfg.CryptoService)
-	user := handlers.NewUserController(cfg.UserRepo)
+	controllers := SetUpApp()
 
 	// Public routes
 	api := engine.Group("api")
 	{
 		v1 := api.Group("v1")
 		{
-			// Middleware
-			authMiddleware := middlewares.AuthMiddleware()
+
+			// User Router
+			helloRoute := v1.Group("hello")
+			{
+				// Hello World
+				helloRoute.GET("", controllers.helloController.SayHello)
+
+				helloRoute.GET("all", controllers.helloController.GetAll)
+			}
 		}
 	}
 	return engine

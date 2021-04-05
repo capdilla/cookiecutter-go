@@ -1,10 +1,12 @@
-module github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}
+module github.com/DUNA-E-Commmerce/test2
 
 go 1.14
 
 require (
 	github.com/appleboy/gin-jwt/v2 v2.6.4
 	github.com/aws/aws-sdk-go v1.36.29
+	github.com/canthefason/go-watcher v0.2.4 // indirect
+	github.com/fatih/color v1.10.0 // indirect
 	github.com/gin-contrib/requestid v0.0.1
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator/v10 v10.4.1
@@ -26,6 +28,7 @@ require (
 	go.uber.org/zap v1.16.0
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
+	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect

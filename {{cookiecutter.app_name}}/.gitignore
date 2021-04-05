@@ -1,0 +1,9 @@
+.swp
+config/release.yaml
+build/
+Godeps/
+!Godeps/Godeps.json
+payments
+.env
+.idea
+credentials.json

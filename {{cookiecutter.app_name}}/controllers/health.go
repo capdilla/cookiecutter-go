@@ -3,12 +3,13 @@ package controllers
 import (
 	"net/http"
 
+	services "github.com/DUNA-E-Commmerce/{{cookiecutter.app_name}}/services"
 	"github.com/gin-gonic/gin"
 )
 
 // HealthController type
-type HealthController struct{
-	healthService: *services.HealthService
+type HealthController struct {
+	healthService *services.HealthService
 }
 
 // GenericError is the default error message that is generated.

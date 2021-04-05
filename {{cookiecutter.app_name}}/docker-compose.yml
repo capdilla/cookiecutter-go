@@ -5,7 +5,7 @@ services:
     volumes:
       - {{cookiecutter.app_name}}-db:/var/lib/postgresql/duna-{{cookiecutter.app_name}}
     ports:
-      - "5443:5432"
+      - "{{cookiecutter.db_dev_port}}:5432"
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
       POSTGRES_DB: duna-{{cookiecutter.app_name}}
@@ -20,7 +20,7 @@ services:
       DATABASE_PASSWORD: password
       DATABASE: duna-{{cookiecutter.app_name}}
       DATABASE_HOST: db
-      DB_PORT: {{cookiecutter.db_dev_port}}
+      DB_PORT: 5432
     env_file:
       - .env
     depends_on:
